@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction Details</title>
+</head>
+<body>
+<h1>Transaction Details</h1>
+
+<div id="transactionGrid"></div>
+
+<script>
+        // Function to fetch transaction data from the server
+        function fetchTransactions() {
+            fetch('/api/users/transactions', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken') // Include the JWT token in the request header
+                }
+            })
+            .then(response => response.json())
+            .then(transactions => displayTransactionGrid(transactions))
+            .catch(error => console.error('Error fetching transactions:', error));
+        }
+
+        // Function to display the transaction data in a grid
+        function displayTransactionGrid(transactions) {
+            const gridContainer = document.getElementById('transactionGrid');
+            gridContainer.innerHTML = ''; // Clear previous content (if any)
+
+            // Create the header row
+            const headerRow = document.createElement('div');
+            headerRow.classList.add('grid-row', 'header-row');
+            headerRow.innerHTML = `
+
+                <div class="grid-cell">Description</div>
+                <div class="grid-cell">Amount</div>
+                <!-- Add more columns as needed -->
+            `;
+            gridContainer.appendChild(headerRow);
+
+            // Loop through the transactions and create rows for each transaction
+            transactions.forEach(transaction => {
+                const row = document.createElement('div');
+                row.classList.add('grid-row');
+                row.innerHTML = `
+
+                    <div class="grid-cell">${transaction.description}</div>
+                    <div class="grid-cell">${transaction.amount}</div>
+                    <!-- Add more cells for additional fields -->
+                `;
+                gridContainer.appendChild(row);
+            });
+        }
+
+        // Fetch transactions and populate the grid when the page loads
+        window.onload = function() {
+            fetchTransactions();
+        };
+    </script>
+
+<style>
+        /* Basic CSS for the grid */
+        .grid-row {
+            display: flex;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .grid-cell {
+            flex: 1;
+            padding: 5px;
+        }
+
+        .header-row {
+            font-weight: bold;
+        }
+    </style>
+</body>
+</html>
