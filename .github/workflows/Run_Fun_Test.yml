@@ -8,7 +8,52 @@ on:
       - 'src/functional/*.java'
 
 jobs:
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
+          echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
+          echo "export PATH=\${JAVA_HOME}/bin:\${PATH}" >> $GITHUB_ENV
+
+      - name: Build with Maven
+        run: mvn clean package
+        
+  Deploy:
+    name: Deploy
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qy
+          sudo apt-get install -y openssh-client
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Deploy Application
+        run: |
+          echo "Hello ${{ secrets.SSH_PRIVATE_KEY }}"
+          eval $(ssh-agent -s)
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
+          scp -o StrictHostKeyChecking=no target/*.jar ubuntu@34.238.153.133:/opt/Smart-Bank-Spring-boot-Application-0.0.1-SNAPSHOT.jar
+          ssh -o StrictHostKeyChecking=no ubuntu@34.238.153.133 "$JAVA_HOME/bin/java -jar /opt/Smart-Bank-Spring-boot-Application-0.0.1-SNAPSHOT.jar"
+          echo "Smart-Bank-Spring-boot-Application deployed and running in the background."
+  
   functional-test:
+    name: Functional-Test
+    needs: Deploy
     runs-on: self-hosted
 
     steps:
