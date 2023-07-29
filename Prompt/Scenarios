@@ -1,71 +1,23 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+- Incorrect Login Credentials scenario:
+  - User enters incorrect login credentials.
+  - The system recognizes the incorrect credentials.
+  - The login is not successful.
+  - The user is not able to access the system.
 
-public class LoginTest {
-    public static void main(String[] args) throws InterruptedException {
-        // Set up Chrome WebDriver
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--verbose");
-        options.addArguments("--headless");
-        WebDriver driver = new ChromeDriver(options);
+- Correct Login Credentials scenario:
+  - User enters correct login credentials.
+  - The system recognizes the correct credentials.
+  - The login is successful.
+  - The user is able to access the system.
 
-        // Open the Chrome browser and navigate to the Smart Bank login page
-        System.out.println("Opening The Browser");
-        driver.get("http://35.175.173.214:8081/");
-        Thread.sleep(5000);
-        System.out.println("Opening The URL: http://35.175.173.214:8081/");
-
-        // Enter valid credentials
-        WebElement usernameInput = driver.findElement(By.cssSelector("input#username"));
-        WebElement passwordInput = driver.findElement(By.cssSelector("input#password"));
-        usernameInput.sendKeys("krishna");
-        passwordInput.sendKeys("brillio!2022");
-
-        // Click the "Login" button
-        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
-        loginButton.click();
-        Thread.sleep(5000);
-
-        // Verify login success
-        String expectedDashboardURL = "http://35.175.173.214:8081/transactions.html";
-        if (driver.getCurrentUrl().equals(expectedDashboardURL)) {
-            System.out.println("Login successful with username: krishna and password: brillio!2022");
-        } else {
-            System.out.println("Login failed");
-        }
-
-        // Navigate back to the login page
-        driver.navigate().back();
-        Thread.sleep(5000);
-
-        // Enter invalid credentials
-        String username1 = "krishnachavan";
-        String password1 = "krishna@123";
-        System.out.println("Entering an invalid user with username: " + username1 + " and password: " + password1);
-        usernameInput.clear();
-        usernameInput.sendKeys(username1);
-        passwordInput.clear();
-        passwordInput.sendKeys(password1);
-
-        // Click the "Login" button
-        loginButton.click();
-        Thread.sleep(5000);
-
-        // Check if error message is displayed
-        WebElement errorMessage = driver.findElement(By.cssSelector("p.error-message"));
-        if (errorMessage.isDisplayed()) {
-            System.out.println("Error message: " + errorMessage.getText() + " with username: " + username1 + " and password: " + password1);
-        } else {
-            System.out.println("Error message element is not displayed");
-        }
-
-        // Close the browser
-        System.out.println("Closing the Browser");
-        driver.quit();
-    }
-}
+Possible test scenarios for software testers:
+- Test case 1: Verify that the system rejects incorrect login credentials and displays an error message.
+- Test case 2: Verify that the system accepts correct login credentials and allows the user to log in successfully.
+- Test case 3: Verify that the system handles special characters and spaces in the login credentials correctly.
+- Test case 4: Verify that the system has a maximum limit for the number of login attempts and locks the user out after reaching the limit.
+- Test case 5: Verify that the system provides a password recovery option for users who forget their login credentials.
+- Test case 6: Verify that the system logs unsuccessful login attempts for security purposes.
+- Test case 7: Verify that the system displays appropriate error messages for different types of login failures (e.g., incorrect username, incorrect password).
+- Test case 8: Verify that the system clears the login fields after an unsuccessful login attempt.
+- Test case 9: Verify that the system redirects the user to the appropriate page after a successful login.
+- Test case 10: Verify that the system handles concurrent login attempts from different devices or browsers correctly.
