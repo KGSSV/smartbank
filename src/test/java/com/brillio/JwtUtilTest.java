@@ -50,13 +50,11 @@ public class JwtUtilTest {
         boolean isExpired = jwtUtil.isTokenExpired(token);
         Assertions.assertFalse(isExpired);
     }
-
     @Test
     public void testGenerateToken() {
         String token = jwtUtil.generateToken(userDetails);
         Assertions.assertNotNull(token);
     }
-
     @Test
     public void testValidateToken() {
         String token = jwtUtil.generateToken(userDetails);
