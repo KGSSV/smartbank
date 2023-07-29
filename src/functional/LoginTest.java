@@ -7,7 +7,7 @@ public class SmartBankLoginAutomation {
 
     public static void main(String[] args) throws InterruptedException {
         // Set the path to the chromedriver executable
-        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         // Create a new instance of the ChromeDriver
         WebDriver driver = new ChromeDriver();
         // Navigate to the Smart Bank login page
