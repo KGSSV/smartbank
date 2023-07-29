@@ -8,27 +8,27 @@ on:
       - 'src/functional/*.java'
 
 jobs:
-  Build:
-    name: Build
-    runs-on: ubuntu-latest
+#   Build:
+#     name: Build
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Set up JDK 11
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openjdk-11-jdk
-          echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
-          echo "export PATH=\${JAVA_HOME}/bin:\${PATH}" >> $GITHUB_ENV
+#       - name: Set up JDK 11
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y openjdk-11-jdk
+#           echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> $GITHUB_ENV
+#           echo "export PATH=\${JAVA_HOME}/bin:\${PATH}" >> $GITHUB_ENV
 
-      - name: Build with Maven
-        run: mvn clean package
+#       - name: Build with Maven
+#         run: mvn clean package
         
   Deploy:
     name: Deploy
-    needs: Build
+#     needs: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
