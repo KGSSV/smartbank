@@ -3,7 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginTest {
+public class SmartBankLoginAutomation {
 
     public static void main(String[] args) throws InterruptedException {
         // Set the path to the chromedriver executable
@@ -11,7 +11,7 @@ public class LoginTest {
         // Create a new instance of the ChromeDriver
         WebDriver driver = new ChromeDriver();
         // Navigate to the Smart Bank login page
-        driver.get("http://34.238.153.133:8081/");
+        driver.get("http://54.161.80.51:8081/");
 
         // Wait for the page to load
         Thread.sleep(5000);
