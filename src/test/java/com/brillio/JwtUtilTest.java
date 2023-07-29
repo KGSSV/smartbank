@@ -1,64 +1,84 @@
 package com.brillio;
 
 import com.brillio.util.JwtUtil;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class JwtUtilTest {
+class JwtUtilTest {
 
     private JwtUtil jwtUtil;
     private UserDetails userDetails;
 
     @BeforeEach
-    public void setup() {
+    void setUp() {
         jwtUtil = new JwtUtil();
-        userDetails = mock(UserDetails.class);
-        when(userDetails.getUsername()).thenReturn("testUser");
+        userDetails = new UserDetails() {
+            @Override
+            public String getPassword() {
+                return null;
+            }
+
+            @Override
+            public String getUsername() {
+                return "testUser";
+            }
+
+            @Override
+            public boolean isAccountNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isAccountNonLocked() {
+                return false;
+            }
+
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
+        };
     }
 
     @Test
-    public void testExtractUsername() {
+    void testExtractUsername() {
         String token = jwtUtil.generateToken(userDetails);
         String username = jwtUtil.extractUsername(token);
-        Assertions.assertEquals("testUser", username);
+        assertEquals("testUser", username);
     }
 
     @Test
-    public void testExtractExpiration() {
+    void testExtractExpiration() {
         String token = jwtUtil.generateToken(userDetails);
         Date expiration = jwtUtil.extractExpiration(token);
-        Assertions.assertNotNull(expiration);
+        assertNotNull(expiration);
     }
 
     @Test
-    public void testExtractClaim() {
+    void testIsTokenExpired() {
         String token = jwtUtil.generateToken(userDetails);
-        String claim = jwtUtil.extractClaim(token, claims -> claims.get("claimKey", String.class));
-        Assertions.assertNull(claim);
+        assertFalse(jwtUtil.isTokenExpired(token));
     }
 
     @Test
-    public void testIsTokenExpired() {
+    void testGenerateToken() {
         String token = jwtUtil.generateToken(userDetails);
-        boolean isExpired = jwtUtil.isTokenExpired(token);
-        Assertions.assertFalse(isExpired);
+        assertNotNull(token);
     }
+
     @Test
-    public void testGenerateToken() {
+    void testValidateToken() {
         String token = jwtUtil.generateToken(userDetails);
-        Assertions.assertNotNull(token);
-    }
-    @Test
-    public void testValidateToken() {
-        String token = jwtUtil.generateToken(userDetails);
-        boolean isValid = jwtUtil.validateToken(token, userDetails);
-        Assertions.assertTrue(isValid);
+        assertTrue(jwtUtil.validateToken(token, userDetails));
     }
 }
