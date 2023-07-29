@@ -32,7 +32,6 @@ public class SmartBankLoginAutomation {
 
         // Find the error message element
         WebElement errorMessage = driver.findElement(By.className("error-message"));
-
         // Print the error message
         System.out.println("Error message: " + errorMessage.getText());
 
