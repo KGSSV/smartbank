@@ -15,7 +15,6 @@ public class SmartBankLoginAutomation {
 
         // Wait for the page to load
         Thread.sleep(5000);
-
         // Find the username and password input fields
         WebElement usernameField = driver.findElement(By.id("username"));
         WebElement passwordField = driver.findElement(By.id("password"));
