@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'src/functional/*.java'
+#     paths:
+#       - 'src/functional/*.java'
 
 jobs:
   functional-test:
