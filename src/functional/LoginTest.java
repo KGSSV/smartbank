@@ -3,7 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginTest {
+public class LoginTest { 
     public static void main(String[] args) throws InterruptedException {
         // Set the system property for the ChromeDriver
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
