@@ -3,7 +3,7 @@ name: Trigger Lambda
 on:
   push:
     branches:
-      - McaFee
+      - master
     paths:
       - 'src/main/java/com/brillio/**/*.java'
       - 'src/main/resources/static/*.html'
