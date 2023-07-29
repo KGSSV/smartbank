@@ -62,35 +62,28 @@ jobs:
       
     - name: Set up Chrome and ChromeDriver
       run: |
-        # Update package lists
-        sudo apt install -y unzip xvfb libxi6 libgconf-2-4 default-jdk
-        # Add Google Chrome repository and install
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        cd src/functional
+        sudo apt update
+        sudo apt install -y unzip xvfb libxi6 libgconf-2-4
+        sudo apt install -y default-jdk
+        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B
         sudo bash -c "echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list"
         sudo apt -y update
         sudo apt -y install google-chrome-stable
-        # Install ChromeDriver
-        CHROME_DRIVER_VERSION="114.0.5735.90"
-        wget "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip"
+        google-chrome --version
+        wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chown root:root /usr/bin/chromedriver
         sudo chmod +x /usr/bin/chromedriver
-        # Install Selenium server
-        SELENIUM_VERSION="3.141.59"
-        wget "https://selenium-release.storage.googleapis.com/$SELENIUM_VERSION/selenium-server-standalone-$SELENIUM_VERSION.jar"
-        mv "selenium-server-standalone-$SELENIUM_VERSION.jar" selenium-server-standalone.jar
-        # Install TestNG
-        TESTNG_VERSION="6.8.7"
-        wget "http://www.java2s.com/Code/JarDownload/testng/testng-$TESTNG_VERSION.jar.zip"
-        unzip "testng-$TESTNG_VERSION.jar.zip"
-        # Set up environment variables
-        export CLASSPATH=".:selenium-server-standalone.jar:testng-$TESTNG_VERSION.jar"
-        # Run Chrome with xvfb
-        xvfb-run java -Dwebdriver.chrome.driver=/usr/bin/chromedriver -jar selenium-server-standalone.jar &
-        # Compile and run the tests
-        wget "https://repo1.maven.org/maven2/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar"
-        javac -cp "$CLASSPATH:commons-io-2.11.0.jar" LoginTest.java
-        java -cp "$CLASSPATH:commons-io-2.11.0.jar" LoginTest
+        wget https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+        mv selenium-server-standalone-3.141.59.jar selenium-server-standalone.jar
+        wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
+        unzip testng-6.8.7.jar.zip
+        xvfb-run java -Dwebdriver.chrome.driver=/usr/bin/chromedriver -jar selenium-server-standalone.jar & 
+        export CLASSPATH=".:selenium-server-standalone.jar:testng-6.8.7.jar"
+        wget https://repo1.maven.org/maven2/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar
+        javac -cp ".:selenium-server-standalone.jar:testng-6.8.7.jar:commons-io-2.11.0.jar" LoginTest.java
+        java -cp ".:selenium-server-standalone.jar:testng-6.8.7.jar:commons-io-2.11.0.jar" LoginTest
       # Handle errors
       continue-on-error: true
