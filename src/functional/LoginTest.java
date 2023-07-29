@@ -18,11 +18,9 @@ public class SmartBankLoginAutomation {
         // Find the username and password input fields
         WebElement usernameField = driver.findElement(By.id("username"));
         WebElement passwordField = driver.findElement(By.id("password"));
-
         // Enter the incorrect login credentials
         usernameField.sendKeys("incorrect_username");
         passwordField.sendKeys("incorrect_password");
-
         // Find the login button and click it
         WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
         loginButton.click();
