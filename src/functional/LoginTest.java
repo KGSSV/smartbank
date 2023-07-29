@@ -7,10 +7,8 @@ public class LoginTest {
     public static void main(String[] args) throws InterruptedException {
         // Set the path to the chromedriver executable
         System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-
         // Create a new instance of the ChromeDriver
         WebDriver driver = new ChromeDriver();
-
         // Open the Chrome browser and navigate to the Smart Bank login page
         driver.get("http://34.238.153.133:8081/");
 
