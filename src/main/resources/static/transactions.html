@@ -2,25 +2,44 @@
 <html>
 <head>
     <title>Transaction Details</title>
+    
+    <style>
+        .transaction {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<h1>Transaction Details</h1>
+
 
 <div id="transactionGrid"></div>
 
+<h1>Transaction Viewer</h1>
+    <button class="tran1" onclick="toggleTransactions('transaction1')">Show Transactions 1</button> <br> <br> <br>
+    <div id="transaction1" class="transaction">
+        <!-- Your transaction details will be displayed here -->
+        <p class="trans1-details">Transaction 1 details...</p>
+        <p class="trans1-amount">Amount: $100</p>
+        <p class="trans1-date">Date: 2023-07-24</p>
+    </div>
+    <button class="tran2" onclick="toggleTransactions('transaction2')">Show Transactions 2</button> <br> <br> <br>
+    <div id="transaction2" class="transaction">
+        <!-- Your transaction details will be displayed here -->
+        <p class="trans2-details">Transaction 2 details...</p>
+        <p class="trans2-amount">Amount: $550</p>
+        <p class="trans2-date">Date: 2023-07-21</p>
+    </div>
+    <button class="tran3" onclick="toggleTransactions('transaction3')">Show Transactions 3</button> <br> <br> <br>
+    <div id="transaction3" class="transaction">
+        <!-- Your transaction details will be displayed here -->
+        <p class="trans3-details">Transaction 3 details...</p>
+        <p class="trans3-amount">Amount: $999</p>
+        <p class="trans3-date">Date: 2023-07-22</p>
+    </div>
+
 <script>
         // Function to fetch transaction data from the server
-        function fetchTransactions() {
-            fetch('/api/users/transactions', {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken') // Include the JWT token in the request header
-                }
-            })
-            .then(response => response.json())
-            .then(transactions => displayTransactionGrid(transactions))
-            .catch(error => console.error('Error fetching transactions:', error));
-        }
-
+        
         // Function to display the transaction data in a grid
         function displayTransactionGrid(transactions) {
             const gridContainer = document.getElementById('transactionGrid');
@@ -50,10 +69,21 @@
                 gridContainer.appendChild(row);
             });
         }
+        
+        function toggleTransactions(transactionId) {
+            var transaction = document.getElementById(transactionId);
+
+            if (transaction.style.display === '' || transaction.style.display === 'none') {
+                transaction.style.display = 'block';
+            } else {
+                transaction.style.display = 'none';
+            }
+        }
+
 
         // Fetch transactions and populate the grid when the page loads
         window.onload = function() {
-            fetchTransactions();
+           // fetchTransactions();
         };
     </script>
 
