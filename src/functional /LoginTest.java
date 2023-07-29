@@ -10,10 +10,8 @@ public class LoginTest {
 
         // Create a new instance of the ChromeDriver
         WebDriver driver = new ChromeDriver();
-
         // Navigate to the Smart Bank login page
         driver.get("http://34.238.153.133:8081/");
-
         // Wait for the page to load
         Thread.sleep(5000);
 
