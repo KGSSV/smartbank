@@ -22,7 +22,7 @@ public class LoginTest {
         WebElement passwordField = driver.findElement(By.id("password"));
 
         usernameField.sendKeys("your_username");
-        passwordField.sendKeys("your_password");
+        passwordField.sendKeys("your_password"); 
 
         // Find the login button and click it
         WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
