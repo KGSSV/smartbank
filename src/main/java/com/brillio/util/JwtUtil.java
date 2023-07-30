@@ -23,6 +23,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+
 @Component
 public class JwtUtil {
     private String SECRET_KEY = "secretamit";
