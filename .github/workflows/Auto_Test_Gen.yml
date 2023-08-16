@@ -27,6 +27,7 @@ jobs:
         run: |
           PAYLOAD='{"owner": "KGSSV",
                 "token": "${{ secrets.MY_TOKEN }}",
+                "openai" : "${{ secrets.OPEN_AI_SECRET }}",
                 "repo": "smartbank",
                 "branch": "master"}'
           ENCODED_PAYLOAD=$(echo -n $PAYLOAD | base64)
