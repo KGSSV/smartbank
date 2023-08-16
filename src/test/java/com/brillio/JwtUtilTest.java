@@ -17,7 +17,7 @@ public class JwtUtilTest {
     private UserDetails userDetails;
 
     @BeforeEach
-    public void setUp() {
+    public void setup() {
         jwtUtil = new JwtUtil();
         userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn("testUser");
